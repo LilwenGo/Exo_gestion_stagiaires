@@ -1,8 +1,30 @@
 # Taches/Sous-taches
-Temps global:
+Temps global: 18h 45min
 - Concéption base de données:  45min
     - MCD/MLD: 30min
     - Mise en place BDD: 15 min
-- Développement du site:
-    - Page d'ajout:
-        - 
+- Développement du site: 15h
+    - Page d'ajout: 4h
+        - Backend: 3h
+            - Creation classes: 1h
+            - Ajout d'un nouveau stagiaire: 2h
+        - Frontend: 1h
+            - Mise en place du formulaire: 1h
+    - Page d'affichage: 5h 30min
+        - Affichage: 3h
+            - Backend: 2h
+                - Requetes d'affichage:
+            - Frontend: 1h
+                - HTML important:
+        - Supression: 2h 30min
+            - Backend: 2h
+                - Requetes de supression: 2h
+            - Frontend: 30min
+                - Verification cases à suprimer: 30min
+    - Page de modification : 5h 30min
+        - Backend: 2h
+            - Requetes de modification: 2h
+        - Frontend: 3h 30min
+            - Changements en direct formulaires: 3h
+            - Verification cases à modifier: 30min
+- Tests: 3h
