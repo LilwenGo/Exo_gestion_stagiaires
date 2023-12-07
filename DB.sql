@@ -35,7 +35,7 @@ create table FORMATEUR
 /*==============================================================*/
 create table FORMER
 (
-   ID_STAGIAIRE         int not null AUTO_INCREMENT,
+   ID_STAGIAIRE         int not null,
    ID_FORMATEUR         int not null,
    DATE_DEBUT           date,
    DATE_FIN             date,
