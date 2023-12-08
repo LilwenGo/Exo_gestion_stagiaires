@@ -25,7 +25,7 @@
             ?>
         </select>
         <p>type de formation:</p>
-        <select name="formation">
+        <select name="formation" id="formation">
             <?php
                 $sql2 = "SELECT * FROM type_formation";
                 $res2 = $c->query($sql2);
@@ -41,15 +41,16 @@
                 $fm = new Formateurmanager($c);
                 $arrf = $fm->getAllFormateurs();
                 foreach ($arrf as $val) {
-                    $str = '<input type="checkbox" name="formateurs" if="formateur'.$val->getId().'" data-metiers="';
+                    $str = '<input type="checkbox" name="formateurs[]" id="formateur'.$val->getId().'" data-metiers="';
                     foreach ($val->getTypes() as $value) {
                         $str .= $value.',';
                     }
-                    $str .= '" value="formateur'.$val->getId().'"><label for="formateur'.$val->getId().'">'.$val->getNom().' '.$val->getPrenom().' dans la salle '.$val->getSalle().', début <input type="date" name="fdd'.$val->getId().'" value="'.date("Y-m-d").'">, fin <input type="date" name="fdf'.$val->getId().'" value="'.date("Y-m-d", time() + 90 * 24 * 3600).'"></label><br>';
+                    $str .= '" value="formateur'.$val->getId().'"><label for="formateur'.$val->getId().'">'.$val->getNom().' '.$val->getPrenom().' dans la salle '.$val->getSalle().', début <input type="date" class="formateur'.$val->getId().'" name="fdd'.$val->getId().'" value="'.date("Y-m-d").'" min="'.date("Y-m-d").'">, fin <input type="date" class="formateur'.$val->getId().'" name="fdf'.$val->getId().'" value="'.date("Y-m-d", time() + 90 * 24 * 3600).'" value="'.date("Y-m-d").'"></label><br>';
                     echo $str;
                 }
             ?>
         <input type="submit" name="ok" value="Envoyer">
     </form>
+    <script src="script/insertion.js"></script>
 </body>
 </html>
