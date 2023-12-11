@@ -19,6 +19,7 @@ function disableCheckboxes() {
         let dates = document.querySelectorAll('.' + id)
         if(!disable) {
             formateur.setAttribute("disabled", "")
+            formateur.checked = false
             dates.forEach((date) => {
                 date.setAttribute("disabled", "")
             })
