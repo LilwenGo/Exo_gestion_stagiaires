@@ -27,5 +27,26 @@
             }
             return $arr;
         }
+
+        public function insert(Stagiaire $stagiaire): int {
+            $sql = "SELECT * FROM type_formation WHERE LIBELLE_TYPE LIKE :type";
+            $res = $this->c->prepare($sql);
+            $res->execute(array("type" => $stagiaire->getTypeFormation()));
+            if($ligne = $res->fetch()) {
+                $typeid = $ligne["ID_TYPE"];
+            }
+            $res = null;
+            $sql = "SELECT * FROM nationalite WHERE LIBELLE_NATIONALITE LIKE :nationalite";
+            $res = $this->c->prepare($sql);
+            $res->execute(array("nationalite" => $stagiaire->getNationalite()));
+            if($ligne = $res->fetch()) {
+                $nationaliteid = $ligne["ID_NATIONALITE"];
+            }
+            $res = null;
+            $sql = "INSERT INTO stagiaire (ID_TYPE, ID_NATIONALITE, NOM_STAGIAIRE, PRENOM_STAGIAIRE) VALUES (:type, :nationalite, :nom, :prenom)";
+            $res = $this->c->prepare($sql);
+            $res->execute(array("type" => $typeid, "nationalite" => $nationaliteid, "nom" => $stagiaire->getNom(), "prenom" => $stagiaire->getPrenom()));
+            return $this->c->lastInsertId();
+        }
     }
 ?>

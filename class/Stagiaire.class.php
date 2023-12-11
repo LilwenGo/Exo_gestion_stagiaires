@@ -40,11 +40,11 @@
         }
 
         public function getPrenom(): string {
-            return $this->nom;
+            return $this->prenom;
         }
 
-        public function setPrenom(string $nom): void {
-            $this->nom = $nom;
+        public function setPrenom(string $prenom): void {
+            $this->prenom = $prenom;
         }
 
         public function getFormateurs(): array {
