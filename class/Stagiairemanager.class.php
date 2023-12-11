@@ -54,5 +54,27 @@
             }
             $this->c->query($sql);
         }
+
+        public function getAllNationalites(): array {
+            $sql = "SELECT * FROM nationalite";
+            $res = $this->c->query($sql);
+            $arr = [];
+            while ($row = $res->fetch()) {
+                array_push($arr, $row["LIBELLE_NATIONALITE"]);
+            }
+            $res->closeCursor();
+            return $arr;
+        }
+
+        public function getAllTypeFormations(): array {
+            $sql = "SELECT * FROM type_formation";
+            $res = $this->c->query($sql);
+            $arr = [];
+            while ($row = $res->fetch()) {
+                array_push($arr, $row["LIBELLE_TYPE"]);
+            }
+            $res->closeCursor();
+            return $arr;
+        }
     }
 ?>

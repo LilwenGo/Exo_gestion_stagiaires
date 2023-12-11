@@ -24,6 +24,18 @@
             return $arr;
         }
 
+        public function getDates(Stagiaire $stgr, Formateur $f): Stage {
+            $sql = "SELECT * FROM former WHERE ID_STAGIAIRE = :stgr AND ID_FORMATEUR = :f";
+            $res = $this->c->prepare($sql);
+            $res->execute(array("stgr" => $stgr->getId(), "f" => $f->getId()));
+            $s = new Stage();
+            if($ligne = $res->fetch()) {
+                $s->setDateD($ligne["DATE_DEBUT"]);
+                $s->setDateF($ligne["DATE_FIN"]);
+            }
+            return $s;
+        }
+
         public function insert(Stage $stage): void {
             $sql = "INSERT INTO former (ID_STAGIAIRE, ID_FORMATEUR, DATE_DEBUT, DATE_FIN) VALUES (:stgr, :frmt, :dd, :df)";
             $res = $this->c->prepare($sql);

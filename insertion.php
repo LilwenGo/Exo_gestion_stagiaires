@@ -17,20 +17,21 @@
         <select name="nationalite">
             <?php
                 require_once "connexion.php";
-                $sql1 = "SELECT * FROM nationalite";
-                $res1 = $c->query($sql1);
-                while ($row1 = $res1->fetch()) {
-                    echo '<option value="'.$row1["LIBELLE_NATIONALITE"].'">'.$row1["LIBELLE_NATIONALITE"].'</option>';
+                require_once "class/Stagiairemanager.class.php";
+                $stgrm = new Stagiairemanager($c);
+                $arr1 = $stgrm->getAllNationalites();
+                foreach ($arr1 as $v) {
+                    echo '<option value="'.$v.'">'.$v.'</option>';
                 }
             ?>
         </select>
         <p>type de formation:</p>
         <select name="formation" id="formation">
             <?php
-                $sql2 = "SELECT * FROM type_formation";
-                $res2 = $c->query($sql2);
-                while ($row2 = $res2->fetch()) {
-                    echo '<option value="'.$row2["LIBELLE_TYPE"].'">'.$row2["LIBELLE_TYPE"].'</option>';
+                $arr2 = $stgrm->getAllTypeFormations();
+                var_dump($arr2);
+                foreach ($arr2 as $v) {
+                    echo '<option value="'.$v.'">'.$v.'</option>';
                 }
             ?>
         </select>

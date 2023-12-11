@@ -40,7 +40,9 @@
                 foreach ($arr as $val) {
                     echo "<tr><td>".$val->getNom()."</td><td>".$val->getPrenom()."</td><td>".$val->getNationalite()."</td><td>".$val->getTypeFormation()."</td><td>";
                     foreach ($ligne = $stgm->getStages($val) as $value) {
-                        echo $value->getFormateur()->getNom()." - ".$value->getFormateur()->getSalle()." - ".$value->getDateD()." - ".$value->getDateF()."<br>";
+                        $dated = new DateTime($value->getDateD());
+                        $datef = new DateTime($value->getDateF());
+                        echo $value->getFormateur()->getNom()." - ".$value->getFormateur()->getSalle()." - ".$dated->format("d/m/Y")." - ".$datef->format("d/m/Y")."<br>";
                     }
                     echo '</td><td><input type="checkbox" name="suprimer[]" value="'.$val->getId().'"></td></tr>';
                 }
