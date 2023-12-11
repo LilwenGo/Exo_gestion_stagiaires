@@ -51,6 +51,8 @@
             ?>
         <input type="submit" name="ok" value="Envoyer">
     </form>
+    <a href="affichage.php">Voir stages</a>
+    <a href="modification.php">Modifier stagiaire</a>
     <script src="script/insertion.js"></script>
 </body>
 </html>

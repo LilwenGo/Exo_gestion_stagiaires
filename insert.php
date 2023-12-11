@@ -8,10 +8,10 @@
     $stgm = new Stagemanager($c);
     $stgrm = new Stagiairemanager($c);
     $stgr = new Stagiaire();
-    $stgr->setNom($_POST["nom"]);
-    $stgr->setPrenom($_POST["prenom"]);
-    $stgr->setNationalite($_POST["nationalite"]);
-    $stgr->setTypeFormation($_POST["formation"]);
+    $stgr->setNom(htmlspecialchars($_POST["nom"]));
+    $stgr->setPrenom(htmlspecialchars($_POST["prenom"]));
+    $stgr->setNationalite(htmlspecialchars($_POST["nationalite"]));
+    $stgr->setTypeFormation(htmlspecialchars($_POST["formation"]));
     $stgrid = $stgrm->insert($stgr);
     $stgr->setId($stgrid);
     foreach($_POST["formateurs"] as $val) {
@@ -32,4 +32,5 @@
             $stgm->insert($stg);
         }
     }
+    header("Location: affichage.php");
 ?>
