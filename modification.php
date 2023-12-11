@@ -38,7 +38,7 @@
                 $stgm = new Stagemanager($c);
                 $arr = $stgrm->getAllStagiaires();
                 foreach ($arr as $val) {
-                    echo '<tr><td><input type="text" name="nom" value="'.$val->getNom().'"></td><td><input type="text" name="prenom" value="'.$val->getPrenom().'"></td><td><select name="nationalite">';
+                    echo '<tr><td><input type="text" name="nom'.$val->getId().'" value="'.$val->getNom().'"></td><td><input type="text" name="prenom'.$val->getId().'" value="'.$val->getPrenom().'"></td><td><select name="nationalite'.$val->getId().'">';
                     $arr1 = $stgrm->getAllNationalites();
                     foreach ($arr1 as $v) {
                         if($val->getNationalite() === $v) {
@@ -47,7 +47,7 @@
                             echo '<option value="'.$v.'">'.$v.'</option>';
                         }
                     }
-                    echo '</select></td><td><select name="formation" id="formation" class="'.$val->getId().'">';
+                    echo '</select></td><td><select name="formation'.$val->getId().'" id="formation" class="'.$val->getId().'">';
                     $arr2 = $stgrm->getAllTypeFormations();
                     foreach ($arr2 as $v) {
                         if($val->getTypeFormation() === $v) {
@@ -62,7 +62,7 @@
                     $fm = new Formateurmanager($c);
                     $arrf = $fm->getAllFormateurs();
                     foreach ($arrf as $val2) {
-                        $str = '<input type="checkbox" name="formateurs[]" id="formateur'.$val2->getId().','.$val->getId().'" data-metiers="';
+                        $str = '<input type="checkbox" name="formateurs'.$val->getId().'[]" id="formateur'.$val2->getId().','.$val->getId().'" data-metiers="';
                         foreach ($val2->getTypes() as $value) {
                             $str .= $value.',';
                         }
