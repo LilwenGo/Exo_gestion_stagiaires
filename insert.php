@@ -12,8 +12,10 @@
     $stgr->setPrenom(htmlspecialchars($_POST["prenom"]));
     $stgr->setNationalite(htmlspecialchars($_POST["nationalite"]));
     $stgr->setTypeFormation(htmlspecialchars($_POST["formation"]));
+    //Récupère l'id d'insertion pour le reutiliser
     $stgrid = $stgrm->insert($stgr);
     $stgr->setId($stgrid);
+    //Boucle pour creer les formations avec les formateurs selectionnés
     foreach($_POST["formateurs"] as $val) {
         $id = substr($val, 9, strlen($val));
         $sql = "SELECT * FROM formateur WHERE ID_FORMATEUR = :id";
@@ -29,6 +31,7 @@
             $stg->setFormateur($f);
             $stg->setDateD($_POST["fdd".$id]);
             $stg->setDateF($_POST["fdf".$id]);
+            //Insere la formation
             $stgm->insert($stg);
         }
     }

@@ -1,6 +1,6 @@
 const formateurs = document.getElementsByName("formateurs[]")
 const typeformation = document.querySelector("#formation")
-
+//Fonction de desactivation des boxes
 function disableCheckboxes() {
     formateurs.forEach((formateur) => {
         let tmpstr = formateur.getAttribute("data-metiers")
@@ -32,6 +32,7 @@ function disableCheckboxes() {
     })
 }
 
+//J'ai tenté quelque chose pour les dates plus petites que d'autres mais ça ne marche pas
 const inputdates = document.querySelectorAll("input[type='date']")
 for(let j = 0;j < inputdates.length;j += 2) {
     inputdates[j].addEventListener("change", () => {

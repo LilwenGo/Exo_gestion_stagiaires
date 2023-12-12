@@ -36,14 +36,17 @@
                 require_once "class/Stagiairemanager.class.php";
                 $stgrm = new Stagiairemanager($c);
                 $stgm = new Stagemanager($c);
+                //Recupere tous les stagiaires pour l'affichage
                 $arr = $stgrm->getAllStagiaires();
                 foreach ($arr as $val) {
                     echo "<tr><td>".$val->getNom()."</td><td>".$val->getPrenom()."</td><td>".$val->getNationalite()."</td><td>".$val->getTypeFormation()."</td><td>";
+                    //Recupere les formations en cours pour l'affichage
                     foreach ($ligne = $stgm->getStages($val) as $value) {
                         $dated = new DateTime($value->getDateD());
                         $datef = new DateTime($value->getDateF());
                         echo $value->getFormateur()->getNom()." - ".$value->getFormateur()->getSalle()." - ".$dated->format("d/m/Y")." - ".$datef->format("d/m/Y")."<br>";
                     }
+                    //Ajoute une checkbox de supression
                     echo '</td><td><input type="checkbox" name="suprimer[]" value="'.$val->getId().'"></td></tr>';
                 }
             ?>

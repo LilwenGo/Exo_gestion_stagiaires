@@ -7,7 +7,7 @@
         }
 
         public function getAllStagiaires(): array {
-            $sql = "SELECT * FROM stagiaire JOIN nationalite ON stagiaire.ID_NATIONALITE = nationalite.ID_NATIONALITE JOIN type_formation ON stagiaire.ID_TYPE = type_formation.ID_TYPE";
+            $sql = "SELECT * FROM stagiaire JOIN nationalite ON stagiaire.ID_NATIONALITE = nationalite.ID_NATIONALITE JOIN type_formation ON stagiaire.ID_TYPE = type_formation.ID_TYPE ORDER BY NOM_STAGIAIRE";
             $res = $this->c->query($sql);
             $arr = [];
             while ($ligne = $res->fetch()) {

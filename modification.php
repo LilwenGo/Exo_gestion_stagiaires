@@ -37,9 +37,12 @@
                 require_once "class/Stagiairemanager.class.php";
                 $stgrm = new Stagiairemanager($c);
                 $stgm = new Stagemanager($c);
+                //Recupère les stagiaires et boucle dessus
                 $arr = $stgrm->getAllStagiaires();
                 foreach ($arr as $stgr) {
+                    //Cree les premiers td de noms
                     echo '<tr><td><input type="text" name="nom'.$stgr->getId().'" value="'.$stgr->getNom().'"></td><td><input type="text" name="prenom'.$stgr->getId().'" value="'.$stgr->getPrenom().'"></td><td><select name="nationalite'.$stgr->getId().'">';
+                    //Recupère les nationnalités de la bdd et les affiche
                     $arr1 = $stgrm->getAllNationalites();
                     foreach ($arr1 as $v) {
                         if($stgr->getNationalite() === $v) {
@@ -49,6 +52,7 @@
                         }
                     }
                     echo '</select></td><td><select name="formation'.$stgr->getId().'" class="formation '.$stgr->getId().'">';
+                    //Recupère les types de formation de la bdd et les affiche
                     $arr2 = $stgrm->getAllTypeFormations();
                     foreach ($arr2 as $v) {
                         if($stgr->getTypeFormation() === $v) {
@@ -61,22 +65,27 @@
                     require_once "class/Formateurmanager.class.php";
                     require_once "class/Formateur.class.php";
                     $fm = new Formateurmanager($c);
+                    //Boucle sur les formateurs pour les afficher après récupération
                     $arrf = $fm->getAllFormateurs();
                     foreach ($arrf as $f) {
                         $str = '<input type="checkbox" name="formateurs'.$stgr->getId().'[]" id="formateur'.$f->getId().'\,'.$stgr->getId().'" data-metiers="';
+                        //Récupère les metiers du formateur et les stocke
                         foreach ($f->getTypes() as $value) {
                             $str .= $value.',';
                         }
+                        //Récupère les dates et voit si il faut les afficher
                         $ligne = $stgm->getAllDates($stgr, $f);
                         if($ligne->getDateD() && $ligne->getDateF()) {
                             $dated = new DateTime($ligne->getDateD());
                             $datef = new DateTime($ligne->getDateF());
-                            $str .= '" value="formateur'.$f->getId().','.$stgr->getId().'" checked><label for="formateur'.$f->getId().','.$stgr->getId().'">'.$f->getNom().' - '.$f->getSalle().' - <input type="date" class="formateur'.$f->getId().','.$stgr->getId().'" name="fdd'.$f->getId().','.$stgr->getId().'" value="'.$ligne->getDateD().'" min="'.$ligne->getDateD().'"> - <input type="date" class="formateur'.$f->getId().','.$stgr->getId().'" name="fdf'.$f->getId().','.$stgr->getId().'" value="'.$ligne->getDateF().'" value="'.$ligne->getDateF().'"></label><br>';
+                            //Si les dates existent j'en deduis que le formateur forme le stagiaire et donc ajoute checked
+                            $str .= '" value="formateur'.$f->getId().','.$stgr->getId().'" checked><label for="formateur'.$f->getId().'\,'.$stgr->getId().'">'.$f->getNom().' - '.$f->getSalle().' - <input type="date" class="formateur'.$f->getId().','.$stgr->getId().'" name="fdd'.$f->getId().','.$stgr->getId().'" value="'.$ligne->getDateD().'" min="'.$ligne->getDateD().'"> - <input type="date" class="formateur'.$f->getId().','.$stgr->getId().'" name="fdf'.$f->getId().','.$stgr->getId().'" value="'.$ligne->getDateF().'" value="'.$ligne->getDateF().'"></label><br>';
                         } else {
-                            $str .= '" value="formateur'.$f->getId().','.$stgr->getId().'"><label for="formateur'.$f->getId().','.$stgr->getId().'">'.$f->getNom().' - '.$f->getSalle().' - <input type="date" class="formateur'.$f->getId().','.$stgr->getId().'" name="fdd'.$f->getId().','.$stgr->getId().'" value="'.date("Y-m-d").'" min="'.date("Y-m-d").'"> - <input type="date" class="formateur'.$f->getId().','.$stgr->getId().'" name="fdf'.$f->getId().','.$stgr->getId().'" value="'.date("Y-m-d", time() + 90 * 24 * 3600).'" value="'.date("Y-m-d").'"></label><br>';
+                            $str .= '" value="formateur'.$f->getId().','.$stgr->getId().'"><label for="formateur'.$f->getId().'\,'.$stgr->getId().'">'.$f->getNom().' - '.$f->getSalle().' - <input type="date" class="formateur'.$f->getId().','.$stgr->getId().'" name="fdd'.$f->getId().','.$stgr->getId().'" value="'.date("Y-m-d").'" min="'.date("Y-m-d").'"> - <input type="date" class="formateur'.$f->getId().','.$stgr->getId().'" name="fdf'.$f->getId().','.$stgr->getId().'" value="'.date("Y-m-d", time() + 90 * 24 * 3600).'" value="'.date("Y-m-d").'"></label><br>';
                         }
                         echo $str;
                     }
+                    //Affiche la checkbox finale et recommence l'operation pour le prochain stagiaire
                     echo '</td><td><input type="checkbox" name="modifier[]" value="'.$stgr->getId().'"></td></tr>';
                 }
             ?>

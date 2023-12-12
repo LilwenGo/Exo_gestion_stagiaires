@@ -20,6 +20,7 @@
                 require_once "class/Stagiairemanager.class.php";
                 $stgrm = new Stagiairemanager($c);
                 $arr1 = $stgrm->getAllNationalites();
+                //Generation select nationalités
                 foreach ($arr1 as $v) {
                     echo '<option value="'.$v.'">'.$v.'</option>';
                 }
@@ -29,7 +30,7 @@
         <select name="formation" id="formation">
             <?php
                 $arr2 = $stgrm->getAllTypeFormations();
-                var_dump($arr2);
+                //Generation select type formation
                 foreach ($arr2 as $v) {
                     echo '<option value="'.$v.'">'.$v.'</option>';
                 }
@@ -41,6 +42,7 @@
                 require_once "class/Formateur.class.php";
                 $fm = new Formateurmanager($c);
                 $arrf = $fm->getAllFormateurs();
+                //Generation formateurs
                 foreach ($arrf as $val) {
                     $str = '<input type="checkbox" name="formateurs[]" id="formateur'.$val->getId().'" data-metiers="';
                     foreach ($val->getTypes() as $value) {
