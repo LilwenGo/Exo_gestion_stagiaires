@@ -24,7 +24,7 @@
             return $arr;
         }
 
-        public function getDates(Stagiaire $stgr, Formateur $f): Stage {
+        public function getAllDates(Stagiaire $stgr, Formateur $f): Stage {
             $sql = "SELECT * FROM former WHERE ID_STAGIAIRE = :stgr AND ID_FORMATEUR = :f";
             $res = $this->c->prepare($sql);
             $res->execute(array("stgr" => $stgr->getId(), "f" => $f->getId()));

@@ -11,6 +11,7 @@
             border-color: gray;
         }
     </style>
+     <script src="script/modification.js" defer></script>
 </head>
 <body>
     <h1>Modifier stages</h1>
@@ -37,20 +38,20 @@
                 $stgrm = new Stagiairemanager($c);
                 $stgm = new Stagemanager($c);
                 $arr = $stgrm->getAllStagiaires();
-                foreach ($arr as $val) {
-                    echo '<tr><td><input type="text" name="nom'.$val->getId().'" value="'.$val->getNom().'"></td><td><input type="text" name="prenom'.$val->getId().'" value="'.$val->getPrenom().'"></td><td><select name="nationalite'.$val->getId().'">';
+                foreach ($arr as $stgr) {
+                    echo '<tr><td><input type="text" name="nom'.$stgr->getId().'" value="'.$stgr->getNom().'"></td><td><input type="text" name="prenom'.$stgr->getId().'" value="'.$stgr->getPrenom().'"></td><td><select name="nationalite'.$stgr->getId().'">';
                     $arr1 = $stgrm->getAllNationalites();
                     foreach ($arr1 as $v) {
-                        if($val->getNationalite() === $v) {
+                        if($stgr->getNationalite() === $v) {
                             echo '<option value="'.$v.'" selected>'.$v.'</option>';
                         } else {
                             echo '<option value="'.$v.'">'.$v.'</option>';
                         }
                     }
-                    echo '</select></td><td><select name="formation'.$val->getId().'" id="formation" class="'.$val->getId().'">';
+                    echo '</select></td><td><select name="formation'.$stgr->getId().'" class="formation '.$stgr->getId().'">';
                     $arr2 = $stgrm->getAllTypeFormations();
                     foreach ($arr2 as $v) {
-                        if($val->getTypeFormation() === $v) {
+                        if($stgr->getTypeFormation() === $v) {
                             echo '<option value="'.$v.'" selected>'.$v.'</option>';
                         } else {
                             echo '<option value="'.$v.'">'.$v.'</option>';
@@ -61,22 +62,22 @@
                     require_once "class/Formateur.class.php";
                     $fm = new Formateurmanager($c);
                     $arrf = $fm->getAllFormateurs();
-                    foreach ($arrf as $val2) {
-                        $str = '<input type="checkbox" name="formateurs'.$val->getId().'[]" id="formateur'.$val2->getId().','.$val->getId().'" data-metiers="';
-                        foreach ($val2->getTypes() as $value) {
+                    foreach ($arrf as $f) {
+                        $str = '<input type="checkbox" name="formateurs'.$stgr->getId().'[]" id="formateur'.$f->getId().'\,'.$stgr->getId().'" data-metiers="';
+                        foreach ($f->getTypes() as $value) {
                             $str .= $value.',';
                         }
-                        $ligne = $stgm->getDates($val, $val2);
+                        $ligne = $stgm->getAllDates($stgr, $f);
                         if($ligne->getDateD() && $ligne->getDateF()) {
                             $dated = new DateTime($ligne->getDateD());
                             $datef = new DateTime($ligne->getDateF());
-                            $str .= '" value="formateur'.$val2->getId().','.$val->getId().'"><label for="formateur'.$val2->getId().','.$val->getId().'">'.$val2->getNom().' - '.$val2->getSalle().' - <input type="date" class="formateur'.$val2->getId().','.$val->getId().'" name="fdd'.$val2->getId().','.$val->getId().'" value="'.$ligne->getDateD().'" min="'.$ligne->getDateD().'"> - <input type="date" class="formateur'.$val2->getId().','.$val->getId().'" name="fdf'.$val2->getId().','.$val->getId().'" value="'.$ligne->getDateF().'" value="'.$ligne->getDateF().'"></label><br>';
+                            $str .= '" value="formateur'.$f->getId().','.$stgr->getId().'" checked><label for="formateur'.$f->getId().','.$stgr->getId().'">'.$f->getNom().' - '.$f->getSalle().' - <input type="date" class="formateur'.$f->getId().','.$stgr->getId().'" name="fdd'.$f->getId().','.$stgr->getId().'" value="'.$ligne->getDateD().'" min="'.$ligne->getDateD().'"> - <input type="date" class="formateur'.$f->getId().','.$stgr->getId().'" name="fdf'.$f->getId().','.$stgr->getId().'" value="'.$ligne->getDateF().'" value="'.$ligne->getDateF().'"></label><br>';
                         } else {
-                            $str .= '" value="formateur'.$val2->getId().','.$val->getId().'"><label for="formateur'.$val2->getId().','.$val->getId().'">'.$val2->getNom().' - '.$val2->getSalle().' - <input type="date" class="formateur'.$val2->getId().','.$val->getId().'" name="fdd'.$val2->getId().','.$val->getId().'" value="'.date("Y-m-d").'" min="'.date("Y-m-d").'"> - <input type="date" class="formateur'.$val2->getId().','.$val->getId().'" name="fdf'.$val2->getId().','.$val->getId().'" value="'.date("Y-m-d", time() + 90 * 24 * 3600).'" value="'.date("Y-m-d").'"></label><br>';
+                            $str .= '" value="formateur'.$f->getId().','.$stgr->getId().'"><label for="formateur'.$f->getId().','.$stgr->getId().'">'.$f->getNom().' - '.$f->getSalle().' - <input type="date" class="formateur'.$f->getId().','.$stgr->getId().'" name="fdd'.$f->getId().','.$stgr->getId().'" value="'.date("Y-m-d").'" min="'.date("Y-m-d").'"> - <input type="date" class="formateur'.$f->getId().','.$stgr->getId().'" name="fdf'.$f->getId().','.$stgr->getId().'" value="'.date("Y-m-d", time() + 90 * 24 * 3600).'" value="'.date("Y-m-d").'"></label><br>';
                         }
                         echo $str;
                     }
-                    echo '</td><td><input type="checkbox" name="modifier[]" value="'.$val->getId().'"></td></tr>';
+                    echo '</td><td><input type="checkbox" name="modifier[]" value="'.$stgr->getId().'"></td></tr>';
                 }
             ?>
         </tbody>
@@ -85,6 +86,5 @@
     </form>
     <a href="insertion.php">Ajouter stagiaire</a><br>
     <a href="affichage.php">Voir stagiaires</a>
-    <script src="script/modification.js"></script>
 </body>
 </html>
