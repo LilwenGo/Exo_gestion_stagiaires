@@ -49,6 +49,30 @@
             return $this->c->lastInsertId();
         }
 
+        //Fonction qui modifie des donnés en bdd pour la table stagiaire
+        public function update(Stagiaire $stagiaire): void {
+            //Requete de récuperation de l'id du type (en effet je stocke le libelle seulement en objet)
+            $sql = "SELECT * FROM type_formation WHERE LIBELLE_TYPE LIKE :type";
+            $res = $this->c->prepare($sql);
+            $res->execute(array("type" => $stagiaire->getTypeFormation()));
+            if($ligne = $res->fetch()) {
+                $typeid = $ligne["ID_TYPE"];
+            }
+            $res = null;
+            //Même chose pour la nationalité
+            $sql = "SELECT * FROM nationalite WHERE LIBELLE_NATIONALITE LIKE :nationalite";
+            $res = $this->c->prepare($sql);
+            $res->execute(array("nationalite" => $stagiaire->getNationalite()));
+            if($ligne = $res->fetch()) {
+                $nationaliteid = $ligne["ID_NATIONALITE"];
+            }
+            $res = null;
+            //Requete de modification de l'objet dans la table
+            $sql = "UPDATE stagiaire SET ID_TYPE = :type, ID_NATIONALITE = :nationalite, NOM_STAGIAIRE = :nom, PRENOM_STAGIAIRE = :prenom WHERE ID_STAGIAIRE = :id";
+            $res = $this->c->prepare($sql);
+            $res->execute(array("type" => $typeid, "nationalite" => $nationaliteid, "nom" => $stagiaire->getNom(), "prenom" => $stagiaire->getPrenom(), "id" => $stagiaire->getId()));
+        }
+
         //Fonction de supression, on passe un tableau d'ids pour savoir lequels suprimer
         public function delete(array $arr): void {
             $sql = "DELETE FROM stagiaire WHERE";

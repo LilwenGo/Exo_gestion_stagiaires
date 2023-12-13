@@ -44,5 +44,19 @@
             $res = $this->c->prepare($sql);
             $res->execute(array("stgr" => $stage->getStagiaire()->getId(), "frmt" => $stage->getFormateur()->getId(), "dd" => $stage->getDateD(), "df" => $stage->getDateF()));
         }
+
+        //Fonction de supression, on passe un tableau d'ids pour savoir lequels suprimer
+        public function delete(array $arr): void {
+            $sql = "DELETE FROM former WHERE";
+            //Boucle qui permet de ne faire qu'une requete pour toutes les supressions
+            foreach($arr as $key => $val) {
+                if($key == 0 || $key == "0") {
+                    $sql .= " ID_STAGIAIRE = ".htmlspecialchars($val);
+                } else {
+                    $sql .= " OR ID_STAGIAIRE = ".htmlspecialchars($val);
+                }
+            }
+            $this->c->query($sql);
+        }
     }
 ?>

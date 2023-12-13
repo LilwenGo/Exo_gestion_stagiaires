@@ -9,17 +9,17 @@
         $stgrm = new Stagiairemanager($c);
         $stgm = new Stagemanager($c);
         //Suprime le stagiaire et ses formations
-        $stgrm->delete($_POST["modifier"]);
-        foreach ($_POST["modifier"] as $stgrancientid) {
+        $stgm->delete($_POST["modifier"]);
+        foreach ($_POST["modifier"] as $stgrid) {
             $stgr = new Stagiaire();
-            $stgr->setNom(htmlspecialchars($_POST["nom".$stgrancientid]));
-            $stgr->setPrenom(htmlspecialchars($_POST["prenom".$stgrancientid]));
-            $stgr->setNationalite(htmlspecialchars($_POST["nationalite".$stgrancientid]));
-            $stgr->setTypeFormation(htmlspecialchars($_POST["formation".$stgrancientid]));
-            //Récupère l'id d'insertion
-            $stgrid = $stgrm->insert($stgr);
             $stgr->setId($stgrid);
-            foreach($_POST["formateurs".$stgrancientid] as $val2) {
+            $stgr->setNom(htmlspecialchars($_POST["nom".$stgrid]));
+            $stgr->setPrenom(htmlspecialchars($_POST["prenom".$stgrid]));
+            $stgr->setNationalite(htmlspecialchars($_POST["nationalite".$stgrid]));
+            $stgr->setTypeFormation(htmlspecialchars($_POST["formation".$stgrid]));
+            //Execute la modif
+            $stgrm->update($stgr);
+            foreach($_POST["formateurs".$stgrid] as $val2) {
                 //Je convertis l'id html entier en tableau pour faire des traitements individuels
                 $tmparr = explode(",", $val2);
                 $tmpstr = $tmparr[0];
@@ -36,8 +36,8 @@
                     $stg = new Stage();
                     $stg->setStagiaire($stgr);
                     $stg->setFormateur($f);
-                    $stg->setDateD($_POST["fdd".$id.",".$stgrancientid]);
-                    $stg->setDateF($_POST["fdf".$id.",".$stgrancientid]);
+                    $stg->setDateD($_POST["fdd".$id.",".$stgrid]);
+                    $stg->setDateF($_POST["fdf".$id.",".$stgrid]);
                     //Réinsère un nouveau stagiaire et ses formations
                     $stgm->insert($stg);
                 }
