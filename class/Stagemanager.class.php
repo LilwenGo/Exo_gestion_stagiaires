@@ -6,6 +6,7 @@
             $this->c = $c;
         }
 
+        //Recupere toutes les formations d'un stagiaire passé en parametre et renvoie un tableau d'objets Stage (formations)
         public function getStages(Stagiaire $stgr): array {
             $sql = "SELECT * FROM former JOIN formateur ON former.ID_FORMATEUR = formateur.ID_FORMATEUR JOIN salle ON formateur.ID_SALLE = salle.ID_SALLE WHERE ID_STAGIAIRE = :id";
             $res = $this->c->prepare($sql);
@@ -24,6 +25,7 @@
             return $arr;
         }
 
+        //Recupere les dates d'une formation entre un stagiaire et un formateur passé en parametre et les return dans un objet Stage
         public function getAllDates(Stagiaire $stgr, Formateur $f): Stage {
             $sql = "SELECT * FROM former WHERE ID_STAGIAIRE = :stgr AND ID_FORMATEUR = :f";
             $res = $this->c->prepare($sql);
@@ -36,6 +38,7 @@
             return $s;
         }
 
+        //Fonction d'insertion des formations
         public function insert(Stage $stage): void {
             $sql = "INSERT INTO former (ID_STAGIAIRE, ID_FORMATEUR, DATE_DEBUT, DATE_FIN) VALUES (:stgr, :frmt, :dd, :df)";
             $res = $this->c->prepare($sql);

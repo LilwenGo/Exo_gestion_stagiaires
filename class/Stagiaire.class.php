@@ -51,10 +51,14 @@
             return $this->formateurs;
         }
 
+        //Je ne me sert pas de cette fonction, je l'avais créée pour stocker les formateurs
         public function setFormateurs(array|Formateur $formateurs, string $method = "set"): bool {
+            //On passe un tableau ou un objet Formateur et un mot clé set|push pour la methode d'affectation
+            //Pour le mot clé set on remplace le tableau $this->formateurs par le nouveau
             if($method === "set" && is_array($formateurs)) {
                 $this->formateurs = $formateurs;
                 return true;
+            //Pour le mot clé push ça fait un push d'un element
             } else if ($method === "push" && is_object($formateurs)) {
                 array_push($this->formateurs, $formateurs);
                 return true;

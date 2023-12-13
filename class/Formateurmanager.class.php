@@ -6,6 +6,7 @@
             $this->c = $c;
         }
 
+        //Fonction de retour de tous les formateurs dans un tableau d'objets du même nom
         public function getAllFormateurs(): array {
             $sql = "SELECT * FROM formateur JOIN salle ON formateur.ID_SALLE = salle.ID_SALLE";
             $res = $this->c->query($sql);
