@@ -32,15 +32,27 @@ function disableCheckboxes() {
     })
 }
 
-//J'ai tenté quelque chose pour les dates plus petites que d'autres mais ça ne marche pas
+//Boucle de gestion des dates (premiere <= deuxieme, premiere > date du jour)
 const inputdates = document.querySelectorAll("input[type='date']")
 for(let j = 0;j < inputdates.length;j += 2) {
+    //Listner premiere <= deuxieme, premiere >= date du jour
     inputdates[j].addEventListener("change", () => {
         inputdates[j + 1].setAttribute("min", inputdates[j].value)
-        if(inputdates[j + 1].value > inputdates[j].value) {
+        //premiere <= deuxieme
+        if(inputdates[j].value > inputdates[j + 1].value) {
             inputdates[j + 1].value = inputdates[j].value
         }
-    }) 
+        //premiere >= date du jour
+        if(inputdates[j].value < inputdates[j].getAttribute("min")) {
+            inputdates[j].value = inputdates[j].getAttribute("min")
+        }
+    })
+    //Listner deuxieme >= premiere
+    inputdates[j + 1].addEventListener("change", () => {
+        if(inputdates[j + 1].value < inputdates[j + 1].getAttribute("min")) {
+            inputdates[j + 1].value = inputdates[j + 1].getAttribute("min")
+        }
+    })
 }
 
 typeformation.addEventListener("change", disableCheckboxes)
